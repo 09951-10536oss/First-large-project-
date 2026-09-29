@@ -1,4 +1,4 @@
-// ฟังก์ชันสร้าง Toast แจ้งเตือนดึ๋งๆ สีเขียว
+// ฟังก์ชันสร้าง Toast แจ้งเตือนสีเขียวขยับได้
 function showToast(message) {
     const existing = document.querySelector('.custom-toast');
     if (existing) existing.remove();
@@ -24,7 +24,11 @@ function renderProducts(category = 'all', searchQuery = '') {
     const grid = document.getElementById('product-grid');
     if (!grid) return;
 
-    let products = getProducts();
+    let products = typeof getProducts === 'function' ? getProducts() : [
+        { id: '1', name: 'Quantum Sound Pro', price: 4990, category: 'Audio', image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500', desc: 'หูฟังไร้สายระดับพรีเมียม' },
+        { id: '2', name: 'Apex Mechanical Keyboard', price: 3590, category: 'Gaming', image: 'https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=500', desc: 'คีย์บอร์ดเกมมิ่งตอบสนองรวดเร็ว' },
+        { id: '3', name: 'UltraView 4K Monitor', price: 12900, category: 'Display', image: 'https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=500', desc: 'จอมอนิเตอร์คมชัดระดับ 4K' }
+    ];
 
     if (category !== 'all') {
         products = products.filter(p => p.category === category);
@@ -32,7 +36,7 @@ function renderProducts(category = 'all', searchQuery = '') {
 
     if (searchQuery.trim() !== '') {
         const q = searchQuery.toLowerCase();
-        products = products.filter(p => p.name.toLowerCase().includes(q) || p.desc.toLowerCase().includes(q));
+        products = products.filter(p => p.name.toLowerCase().includes(q) || (p.desc && p.desc.toLowerCase().includes(q)));
     }
 
     if (products.length === 0) {
@@ -78,7 +82,12 @@ function setupSearch() {
 }
 
 function addToCart(productId) {
-    const products = getProducts();
+    let products = typeof getProducts === 'function' ? getProducts() : [
+        { id: '1', name: 'Quantum Sound Pro', price: 4990, category: 'Audio', image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500' },
+        { id: '2', name: 'Apex Mechanical Keyboard', price: 3590, category: 'Gaming', image: 'https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=500' },
+        { id: '3', name: 'UltraView 4K Monitor', price: 12900, category: 'Display', image: 'https://images.unsplash.com/photo-1527443224154-c4a3942d3acf?w=500' }
+    ];
+
     const product = products.find(p => p.id === productId);
     if (!product) return;
 
@@ -92,12 +101,12 @@ function addToCart(productId) {
     }
 
     localStorage.setItem('nexus_cart', JSON.stringify(cart));
-    updateCartCount();
+    if (typeof updateCartCount === 'function') updateCartCount();
     
-    // ใช้ showToast แทน alert
     showToast(`เพิ่ม "${product.name}" ลงตะกร้าแล้ว!`);
 }
 
 function viewProduct(id) {
     window.location.href = `product-detail.html?id=${id}`;
-                     }
+        }
+                                         
