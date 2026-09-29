@@ -1,0 +1,5 @@
+.metric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin: 1.5rem 0; }
+.metric-card { background: var(--bg-secondary); border: 1px solid var(--border); padding: 1.5rem; border-radius: 12px; }
+.metric-value { font-size: 2rem; font-weight: bold; color: var(--accent); margin-top: 0.5rem; }
+.chart-area { height: 250px; display: flex; align-items: flex-end; gap: 1rem; padding-top: 2rem; }
+.bar { flex: 1; background: var(--accent); border-radius: 4px 4px 0 0; transition: height 0.3s; position: relative; }
