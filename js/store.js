@@ -1,3 +1,15 @@
+function showToast(message) {
+    const toast = document.createElement('div');
+    toast.className = 'custom-toast';
+    toast.innerHTML = `<span>✅</span> <span>${message}</span>`;
+    document.body.appendChild(toast);
+
+    setTimeout(() => {
+        toast.classList.add('hide');
+        setTimeout(() => toast.remove(), 400);
+    }, 2500);
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     initProducts();
     renderProducts(getProducts());
