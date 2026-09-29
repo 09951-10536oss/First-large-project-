@@ -1,4 +1,4 @@
-// ฟังก์ชันสร้าง Toast แจ้งเตือนดึ๋งๆ สีเขียว
+// ฟังก์ชันสร้าง Toast แจ้งเตือนสีเขียวขยับได้
 function showToast(message) {
     const existing = document.querySelector('.custom-toast');
     if (existing) existing.remove();
@@ -44,7 +44,7 @@ function renderCart() {
                 </td>
                 <td>฿${item.price.toLocaleString()}</td>
                 <td>
-                    <input type="number" value="${item.qty}" min="1" style="width:60px; padding:4px; text-align:center;" onchange="changeQty(${index}, this.value)">
+                    <input type="number" value="${item.qty}" min="1" style="width:60px; padding:4px; text-align:center; background:#1e293b; color:#fff; border:1px solid #334155; border-radius:4px;" onchange="changeQty(${index}, this.value)">
                 </td>
                 <td>฿${total.toLocaleString()}</td>
                 <td><button class="btn btn-danger" style="padding:4px 8px; font-size:12px;" onclick="removeItem(${index})">ลบ</button></td>
@@ -62,7 +62,7 @@ function changeQty(index, newQty) {
         cart[index].qty = qty;
         localStorage.setItem('nexus_cart', JSON.stringify(cart));
         renderCart();
-        updateCartCount();
+        if (typeof updateCartCount === 'function') updateCartCount();
     }
 }
 
@@ -72,9 +72,8 @@ function removeItem(index) {
     cart.splice(index, 1);
     localStorage.setItem('nexus_cart', JSON.stringify(cart));
     renderCart();
-    updateCartCount();
+    if (typeof updateCartCount === 'function') updateCartCount();
     
-    // ใช้ showToast แทน alert
     showToast(`ลบ "${removedItem.name}" ออกแล้ว`);
 }
 
@@ -98,12 +97,12 @@ function checkout() {
         return;
     }
 
-    // ใช้ showToast แทน alert
     showToast('ขอบคุณสำหรับคำสั่งซื้อ!');
     localStorage.removeItem('nexus_cart');
     
     setTimeout(() => {
         renderCart();
-        updateCartCount();
+        if (typeof updateCartCount === 'function') updateCartCount();
     }, 1500);
-        }
+}
+    
