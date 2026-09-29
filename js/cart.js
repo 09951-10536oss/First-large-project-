@@ -1,108 +1,72 @@
-// ฟังก์ชันสร้าง Toast แจ้งเตือนสีเขียวขยับได้
-function showToast(message) {
-    const existing = document.querySelector('.custom-toast');
-    if (existing) existing.remove();
+function getCart() {
+    return JSON.parse(localStorage.getItem(CONFIG.STORAGE_KEY_CART)) || [];
+}
 
-    const toast = document.createElement('div');
-    toast.className = 'custom-toast';
-    toast.innerHTML = `<span>✅</span> <span>${message}</span>`;
-    document.body.appendChild(toast);
+function addToCart(productId) {
+    const products = JSON.parse(localStorage.getItem(CONFIG.STORAGE_KEY_PRODUCTS)) || [];
+    const product = products.find(p => p.id === productId);
+    if(!product) return;
 
-    setTimeout(() => {
-        toast.classList.add('hide');
-        setTimeout(() => toast.remove(), 400);
-    }, 2200);
+    let cart = getCart();
+    const existing = cart.find(item => item.id === productId);
+    if(existing) {
+        existing.qty += 1;
+    } else {
+        cart.push({ ...product, qty: 1 });
+    }
+    localStorage.setItem(CONFIG.STORAGE_KEY_CART, JSON.stringify(cart));
+    updateCartBadge();
+    alert('เพิ่มสินค้าลงตะกร้าแล้ว!');
+}
+
+function updateCartBadge() {
+    const badge = document.getElementById('cartCount');
+    if(badge) {
+        const cart = getCart();
+        badge.textContent = cart.reduce((sum, item) => sum + item.qty, 0);
+    }
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    renderCart();
+    const cartTable = document.getElementById('cartItems');
+    if(cartTable) renderCart();
 });
 
 function renderCart() {
-    const container = document.getElementById('cart-items');
-    if (!container) return;
-
-    const cart = JSON.parse(localStorage.getItem('nexus_cart')) || [];
-
-    if (cart.length === 0) {
-        container.innerHTML = `<tr><td colspan="5" style="text-align: center; padding: 40px; color: #94a3b8;">ไม่มีสินค้าในตะกร้า</td></tr>`;
-        updateSummary(0);
-        return;
-    }
+    const cart = getCart();
+    const cartTable = document.getElementById('cartItems');
+    if(!cartTable) return;
 
     let subtotal = 0;
-    container.innerHTML = cart.map((item, index) => {
-        const total = item.price * item.qty;
-        subtotal += total;
+    cartTable.innerHTML = cart.map(item => {
+        const itemTotal = item.price * item.qty;
+        subtotal += itemTotal;
         return `
             <tr>
-                <td>
-                    <div style="display:flex; align-items:center; gap:10px;">
-                        <img src="${item.image}" style="width:40px; height:40px; border-radius:6px; object-fit:cover;">
-                        <span>${item.name}</span>
-                    </div>
-                </td>
+                <td>${item.name}</td>
                 <td>฿${item.price.toLocaleString()}</td>
-                <td>
-                    <input type="number" value="${item.qty}" min="1" style="width:60px; padding:4px; text-align:center; background:#1e293b; color:#fff; border:1px solid #334155; border-radius:4px;" onchange="changeQty(${index}, this.value)">
-                </td>
-                <td>฿${total.toLocaleString()}</td>
-                <td><button class="btn btn-danger" style="padding:4px 8px; font-size:12px;" onclick="removeItem(${index})">ลบ</button></td>
+                <td>${item.qty}</td>
+                <td>฿${itemTotal.toLocaleString()}</td>
+                <td><button class="btn btn-danger" onclick="removeFromCart('${item.id}')">ลบ</button></td>
             </tr>
         `;
     }).join('');
 
-    updateSummary(subtotal);
+    const tax = subtotal * 0.07;
+    document.getElementById('subtotal').textContent = `฿${subtotal.toLocaleString()}`;
+    document.getElementById('tax').textContent = `฿${tax.toLocaleString()}`;
+    document.getElementById('grandTotal').textContent = `฿${(subtotal + tax).toLocaleString()}`;
 }
 
-function changeQty(index, newQty) {
-    let cart = JSON.parse(localStorage.getItem('nexus_cart')) || [];
-    const qty = parseInt(newQty);
-    if (qty > 0) {
-        cart[index].qty = qty;
-        localStorage.setItem('nexus_cart', JSON.stringify(cart));
-        renderCart();
-        if (typeof updateCartCount === 'function') updateCartCount();
-    }
-}
-
-function removeItem(index) {
-    let cart = JSON.parse(localStorage.getItem('nexus_cart')) || [];
-    const removedItem = cart[index];
-    cart.splice(index, 1);
-    localStorage.setItem('nexus_cart', JSON.stringify(cart));
+function removeFromCart(id) {
+    let cart = getCart().filter(i => i.id !== id);
+    localStorage.setItem(CONFIG.STORAGE_KEY_CART, JSON.stringify(cart));
     renderCart();
-    if (typeof updateCartCount === 'function') updateCartCount();
-    
-    showToast(`ลบ "${removedItem.name}" ออกแล้ว`);
-}
-
-function updateSummary(subtotal) {
-    const subtotalEl = document.getElementById('subtotal');
-    const vatEl = document.getElementById('vat');
-    const totalEl = document.getElementById('total');
-
-    const vat = subtotal * 0.07;
-    const total = subtotal + vat;
-
-    if (subtotalEl) subtotalEl.textContent = `฿${subtotal.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
-    if (vatEl) vatEl.textContent = `฿${vat.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
-    if (totalEl) totalEl.textContent = `฿${total.toLocaleString(undefined, {minimumFractionDigits: 2})}`;
+    updateCartBadge();
 }
 
 function checkout() {
-    const cart = JSON.parse(localStorage.getItem('nexus_cart')) || [];
-    if (cart.length === 0) {
-        showToast('ไม่มีสินค้าในตะกร้าครับ');
-        return;
-    }
-
-    showToast('ขอบคุณสำหรับคำสั่งซื้อ!');
-    localStorage.removeItem('nexus_cart');
-    
-    setTimeout(() => {
-        renderCart();
-        if (typeof updateCartCount === 'function') updateCartCount();
-    }, 1500);
+    alert('ขอบคุณสำหรับคำสั่งซื้อ!');
+    localStorage.removeItem(CONFIG.STORAGE_KEY_CART);
+    window.location.href = 'index.html';
 }
-    
