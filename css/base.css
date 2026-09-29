@@ -1,0 +1,18 @@
+:root {
+    --bg-primary: #0f172a;
+    --bg-secondary: #1e293b;
+    --bg-card: rgba(30, 41, 59, 0.7);
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --accent: #14b8a6;
+    --accent-hover: #0d9488;
+    --danger: #ef4444;
+    --success: #10b981;
+    --border: #334155;
+    --font: system-ui, -apple-system, sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: var(--font); }
+body { background-color: var(--bg-primary); color: var(--text-primary); min-height: 100vh; }
+a { color: inherit; text-decoration: none; }
+      
