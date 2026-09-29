@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>จัดการคลังสินค้า - NEXUS</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/tables.css">
+    <link rel="stylesheet" href="css/dark-theme.css">
+</head>
+<body class="dark-mode">
+    <div class="admin-wrapper">
+        <aside class="sidebar">
+            <h2>NEXUS Admin</h2>
+            <a href="analytics.html">แดชบอร์ด</a>
+            <a href="admin-inventory.html" class="active">จัดการคลังสินค้า</a>
+            <a href="admin-orders.html">รายการสั่งซื้อ</a>
+            <a href="index.html">กลับหน้าร้าน</a>
+        </aside>
+        <main class="admin-content">
+            <div class="header-action">
+                <h1>คลังสินค้าคงเหลือ</h1>
+                <button class="btn btn-primary" onclick="openAddModal()">+ เพิ่มสินค้า</button>
+            </div>
+            <table class="data-table">
+                <thead><tr><th>ชื่อ</th><th>หมวดหมู่</th><th>ราคา</th><th>สต็อก</th><th>การจัดการ</th></tr></thead>
+                <tbody id="inventoryTable"></tbody>
+            </table>
+        </main>
+    </div>
+    <script src="js/config.js"></script>
+    <script src="js/mockData.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>

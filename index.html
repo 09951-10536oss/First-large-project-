@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEXUS - Modern Enterprise Suite</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/dark-theme.css">
+</head>
+<body class="dark-mode">
+    <header class="navbar">
+        <div class="nav-brand">
+            <span class="logo-icon">N</span>
+            <span class="logo-text">NEXUS</span>
+        </div>
+        <div class="nav-search">
+            <input type="text" id="searchInput" placeholder="ค้นหาสินค้า ระบบ หรือรายงาน...">
+        </div>
+        <nav class="nav-links">
+            <a href="index.html" class="active">หน้าร้าน</a>
+            <a href="cart.html" class="cart-btn">ตะกร้า <span id="cartCount">0</span></a>
+            <a href="analytics.html">แดชบอร์ด</a>
+            <a href="user-profile.html">โปรไฟล์</a>
+        </nav>
+    </header>
+
+    <main class="main-container">
+        <section class="hero-banner">
+            <h1>แพลตฟอร์มจัดการและจัดจำหน่ายสินค้ายุคใหม่</h1>
+            <p>รวมระบบหน้าร้าน คลังสินค้า และวิเคราะห์ข้อมูลไว้ในที่เดียว</p>
+        </section>
+
+        <section class="filter-section">
+            <button class="filter-chip active" onclick="filterCategory('all')">ทั้งหมด</button>
+            <button class="filter-chip" onclick="filterCategory('Audio')">อุปกรณ์เสียง</button>
+            <button class="filter-chip" onclick="filterCategory('Gaming')">เกมมิ่ง</button>
+            <button class="filter-chip" onclick="filterCategory('Display')">จอภาพ</button>
+        </section>
+
+        <section class="product-grid" id="productContainer">
+            <!-- Render จาก JS -->
+        </section>
+    </main>
+
+    <script src="js/config.js"></script>
+    <script src="js/mockData.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/store.js"></script>
+</body>
+</html>

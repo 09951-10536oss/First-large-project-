@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Executive Analytics - NEXUS</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/dark-theme.css">
+</head>
+<body class="dark-mode">
+    <div class="admin-wrapper">
+        <aside class="sidebar">
+            <h2>NEXUS Admin</h2>
+            <a href="analytics.html" class="active">แดชบอร์ด</a>
+            <a href="admin-inventory.html">จัดการคลังสินค้า</a>
+            <a href="admin-orders.html">รายการสั่งซื้อ</a>
+            <a href="index.html">กลับหน้าร้าน</a>
+        </aside>
+        <main class="admin-content">
+            <h1>ภาพรวมผลประกอบการ</h1>
+            <div class="metric-grid">
+                <div class="metric-card"><h3>รายได้รวม</h3><p class="metric-value" id="revenueMetric">฿0</p></div>
+                <div class="metric-card"><h3>คำสั่งซื้อทั้งหมด</h3><p class="metric-value" id="ordersMetric">0</p></div>
+                <div class="metric-card"><h3>จำนวนสินค้าในสต็อก</h3><p class="metric-value" id="stockMetric">0</p></div>
+            </div>
+            <div class="chart-container card">
+                <h3>แนวโน้มยอดขายประจำสัปดาห์</h3>
+                <div id="salesChart" class="chart-area"></div>
+            </div>
+        </main>
+    </div>
+    <script src="js/config.js"></script>
+    <script src="js/mockData.js"></script>
+    <script src="js/charts.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>

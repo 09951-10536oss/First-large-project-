@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ตะกร้าสินค้า - NEXUS</title>
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/navbar.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/tables.css">
+    <link rel="stylesheet" href="css/dark-theme.css">
+</head>
+<body class="dark-mode">
+    <header class="navbar">
+        <div class="nav-brand"><a href="index.html">NEXUS</a></div>
+    </header>
+    <main class="main-container">
+        <h1>ตะกร้าสินค้าของคุณ</h1>
+        <div class="cart-layout">
+            <table class="data-table">
+                <thead>
+                    <tr><th>สินค้า</th><th>ราคา</th><th>จำนวน</th><th>รวม</th><th>จัดการ</th></tr>
+                </thead>
+                <tbody id="cartItems"></tbody>
+            </table>
+            <div class="cart-summary card">
+                <h3>สรุปคำสั่งซื้อ</h3>
+                <div class="summary-row"><span>ยอดรวม</span><span id="subtotal">฿0</span></div>
+                <div class="summary-row"><span>ภาษี (7%)</span><span id="tax">฿0</span></div>
+                <hr>
+                <div class="summary-row total"><span>ราคารวมสุทธิ</span><span id="grandTotal">฿0</span></div>
+                <button class="btn btn-success w-100" onclick="checkout()">ชำระเงิน</button>
+            </div>
+        </div>
+    </main>
+    <script src="js/config.js"></script>
+    <script src="js/mockData.js"></script>
+    <script src="js/cart.js"></script>
+</body>
+</html>
